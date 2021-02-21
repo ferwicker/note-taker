@@ -27,7 +27,13 @@ app.get('/api/notes', (req, res) => res.json(notes));
 // add new notes
 app.post('/api/notes', (req, res) => {
     const newNote = req.body;
-    // add id here
+    
+    // add unique id to new note
+    const id = generateUniqueId({
+        length: 10
+       });
+    newNote.id = id;
+
     notes.push(newNote);
     res.json(newNote);
   });
