@@ -27,18 +27,27 @@ app.get('/api/notes', (req, res) => res.json(notes));
 // add new notes
 app.post('/api/notes', (req, res) => {
     const newNote = req.body;
-    
+
     // add unique id to new note
     const id = generateUniqueId({
         length: 10
        });
     newNote.id = id;
-
+    
     notes.push(newNote);
     res.json(newNote);
   });
 
-
+// delete requests
+app.delete('/api/notes/:note', function (req, res) {
+    const chosen = req.params.note;
+    for (let i = 0; i < notes.length; i++) {
+        if (chosen === notes[i].id) {
+            notes.splice(i,1);
+          return res.json(notes[i]);
+        }
+      }
+  });
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
